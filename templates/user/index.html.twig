@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User List{% endblock %}
+
+{% block main %}
+    <h1 class="text-center">Lista de Usuarios</h1>
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th class="text-center" scope="col">Username</th>
+                <th class="text-center" scope="col">Email</th>
+                <th class="text-center" scope="col">Password</th>
+                <th class="text-center" scope="col">Nombre</th>
+                <th class="text-center" scope="col">Apellidos</th>
+                <th class="text-center" scope="col">Roles</th>
+                <th class="text-center" scope="col">CreatedAt</th>
+                <th class="text-center" scope="col">UpdatedAt</th>
+                <th class="text-center" scope="col">Status</th>
+                <th class="text-center" scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td class="text-center align-middle small">{{ user.username }}</td>
+                <td class="text-center align-middle small">{{ user.email }}</td>
+                <td class="text-center align-middle small">{{ user.password }}</td>
+                <td class="text-center align-middle small">{{ user.nombre }}</td>
+                <td class="text-center align-middle small">{{ user.apellidos }}</td>
+                <td class="text-center align-middle small">{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td class="text-center align-middle small">{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="text-center align-middle small">{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="text-center align-middle small">{{ user.status }}</td>
+                <td class="text-center align-middle small">
+                    <div class="d-flex text-center align-middle small">
+                        <a class="btn btn-outline-info btn-sm me-1" href="{{ path('app_user_show', {'id': user.id}) }}" role="button">Mostrar</a>
+                        <a class="btn btn-outline-info btn-sm" href="{{ path('app_user_edit', {'id': user.id}) }}" role="button">Editar</a>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">No se han encontrado registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-secondary" href="{{ path('app_user_new') }}" role="button">Crear Usuario</a>
+{% endblock %}
